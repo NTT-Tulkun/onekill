@@ -18,16 +18,14 @@ if (isset($_POST['btn_pass'])) {
     $error['password'] = 'Mật khẩu nhập sai';
   } else {
     unset($error['password']);
-  } 
-  if($newpassword==$user['matKhau']){
+  }
+  if ($newpassword == $user['matKhau']) {
     $error['newpassword'] = 'Mật khẩu mới không được trùng với mật khẩu hiện tại!';
-
-  }elseif(strlen($newpassword) < 6){
+  } elseif (strlen($newpassword) < 6) {
     $error['newpassword'] = 'Mật khẩu phải có ít nhất 6 kí tự !';
-
-  }else {
+  } else {
     unset($error['newpassword']);
-  } 
+  }
 
   if ($newpassword != $renewpassword) {
     $error['renewpassword'] = 'Mật khẩu không khớp';
@@ -51,26 +49,55 @@ if (isset($_POST['btn_pass'])) {
 
 
 if (isset($_REQUEST["btn_luu"])) {
-  
+  unset($error);
+
+
   if (empty($_REQUEST['hoten'])) {
     $error['empty']['hoten'] = 'Chưa nhập họ tên *';
+  } else {
+   // unset($error['empty']['hoten']);
   }
   if (empty($_REQUEST['sodt'])) {
     $error['empty']['phone'] = 'Chưa nhập số điện thoại *';
+  } else {
+    // unset($error['empty']['phone']);
   }
   if (empty($_REQUEST['email'])) {
     $error['empty']['email'] = 'Chưa nhập email *';
+  } else {
+   // unset($error['empty']['email']);
   }
-
+  if (!(strlen($_REQUEST['sodt']) == 10)) {
+    $error['phone']  = "Số điện thoại phải bắt đầu từ số 0 và có 10 số!";
+  } else {
+  //  unset($error['phone']);
+  }
+  $regexEmail = "/^[^\s@]+@[^\s@]+\.[^\s@]+$/";
+  if (!preg_match($regexEmail, $_REQUEST['email'], $matchs)) {
+    $error['email']  = "Email không đúng định dạng!";
+  } else {
+ //   unset($error['email']);
+  }
+  $regexHoTen = "/^([A-Z][a-zÀ-ỹ]*\s)+[A-Z][a-zÀ-ỹ]*$/";
+  if (!preg_match($regexHoTen, $_REQUEST['hoten'], $matchs)) {
+    $error['fullname']  = "Họ tên phải có từ 2 chữ trở lên, mỗi từ phải viết hoa ký tự đầu!";
+  } else {
+  //  unset($error['fullName']);
+  }
   foreach ($taiKhoan as $item) {
 
     if ($_REQUEST["sodt"] == $item['soDienThoai']) {
       $error['phone'] = 'Số điện thoại đã tồn tại !';
+    } else {
+
+   //   unset($error['phone']);
     }
     if ($_REQUEST["email"] == $item['email']) {
       $error['email'] = 'Email đã tồn tại !';
-    }
+    }else {
+   //   unset($error['email']);
 
+    }
   }
 }
 
@@ -204,7 +231,10 @@ if (isset($_REQUEST["btn_luu"])) {
                       <input name="hoten" type="text" class="form-control" id="fullName" value="<?php echo $user['hoTen'] ?>" onchange="validateFullName()">
                       <p class="text-danger" id="fullnameError"><?php if (!empty($error['empty']['fullName'])) {
                                                                   echo  $error['empty']['fullName'];
-                                                                }   ?></p>
+                                                                }
+                                                                if (!empty($error['fullname'])) {
+                                                                  echo $error['fullname'];
+                                                                }  ?></p>
                     </div>
                   </div>
 
@@ -333,13 +363,15 @@ if (isset($_REQUEST["btn_luu"])) {
       $sizeimg = $_FILES["upfile"]["size"];
     } else {
       $hinhAnh = $_REQUEST['old_img'];
+      $tmpimg = '';
+      $typeimg = '';
+      $sizeimg = '';
     }
 
 
 
     $p = new controlManagement();
     $kq = $p->UpdateUser($idTaiKhoan, $matKhau, $maNhanVien, $hoTen, $soDienThoai, $email, $hinhAnh, $Role, $tmpimg, $typeimg, $sizeimg);
-
     if ($kq == 1) {
       echo '<script>alert("Cập nhật thông tin cá nhân thành công")</script> ';
       echo header("refresh: 0; url='admin.php?mod=Profile'");
@@ -349,7 +381,7 @@ if (isset($_REQUEST["btn_luu"])) {
       echo '<script>alert("Không thể Upload ảnh")</script>';
     } elseif ($kq == -2) {
       echo '<script>alert("File lỗi")</script>';
-    }  else {
+    } else {
       echo "Lỗi";
     }
   }
@@ -388,11 +420,11 @@ if (isset($_REQUEST["btn_luu"])) {
   function validatePhone() {
     let sdt = document.getElementById('phone').value;
     var errorElement = document.getElementById("errsdt");
-    let patten = /^0\d{9,10}$/
+    let patten = /^0\d{9}$/
     if (!sdt) {
       errorElement.textContent = "Số điện thoại không được để trống!";
     } else if (!patten.test(sdt)) {
-      errorElement.textContent = "Số điện thoại phải bắt đầu từ số 0 và có 10 hoặc 11 số !";
+      errorElement.textContent = "Số điện thoại phải bắt đầu từ số 0 và có 10 số !";
     } else {
       errorElement.textContent = "";
     }
@@ -437,12 +469,12 @@ if (isset($_REQUEST["btn_luu"])) {
     }
 
     var password = document.getElementById("newPassword").value;
-        var errorElement = document.getElementById("errNewPassword");
-        if (password.length < 6) {
-            errorElement.textContent = "Mật khẩu phải có ít nhất 6 kí tự !";
-        } else {
-            errorElement.textContent = "";
-        }
+    var errorElement = document.getElementById("errNewPassword");
+    if (password.length < 6) {
+      errorElement.textContent = "Mật khẩu phải có ít nhất 6 kí tự !";
+    } else {
+      errorElement.textContent = "";
+    }
   }
 
 

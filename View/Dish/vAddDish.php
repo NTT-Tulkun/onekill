@@ -28,6 +28,9 @@ if (isset($_REQUEST["btn_addDish"])) {
         if ($_REQUEST['loaiMon'] == 0) {
             $error['empty']['loaiMon'] = 'Chưa chọn loại món ăn !';
         }
+        if ($_REQUEST['gia'] <= 1000) {
+            $error['gia'] = "Giá tối thiểu từ 1000 trở lên!";
+        }
     }
 }
 
@@ -62,10 +65,10 @@ if (isset($_REQUEST["btn_addDish"])) {
                     <th>Tên món ăn:</th>
                     <th><input type="text" name="tenMon" id="manv tenMon" placeholder="Nhập tên món ăn" onblur="validateTenMon()">
                         <p class="text-danger" id="tenmonError"><?php if (!empty($error['tenMon'])) {
-                                                    echo  $error['tenMon'];
-                                                } elseif (!empty($error['empty']['tenMon'])) {
-                                                    echo  $error['empty']['tenMon'];
-                                                } ?></p>
+                                                                    echo  $error['tenMon'];
+                                                                } elseif (!empty($error['empty']['tenMon'])) {
+                                                                    echo  $error['empty']['tenMon'];
+                                                                } ?></p>
 
 
                     </th>
@@ -73,7 +76,12 @@ if (isset($_REQUEST["btn_addDish"])) {
                 <tr>
                     <th>giá:</th>
                     <th><input type="number" id="gia" name="gia" placeholder="nhập giá" onblur="validatePrice()">
-                        <p class="text-danger" id="priceError"><?php if (!empty($error['empty']['gia']))   echo  $error['empty']['gia'];   ?></p>
+                        <p class="text-danger" id="priceError"><?php if (!empty($error['empty']['gia'])) {
+                                                                    echo  $error['empty']['gia'];
+                                                                }
+                                                                if (!empty($error['gia'])) {
+                                                                    echo   $error['gia'];
+                                                                } ?></p>
 
                     </th>
                 </tr>
@@ -81,7 +89,11 @@ if (isset($_REQUEST["btn_addDish"])) {
                 <tr>
                     <th>Mô tả</th>
                     <th><textarea name="mota" id="mota" cols="30" rows="10" onblur="validateDescribe()"></textarea>
-                        <p class="text-danger" id="describeError"><?php if (!empty($error['empty']['mota']))   echo  $error['empty']['mota'];   ?></p>
+                        <p class="text-danger" id="describeError"><?php if (!empty($error['empty']['mota'])) {
+                                                                        echo  $error['empty']['mota'];
+                                                                    }
+
+                                                                    ?></p>
 
                     </th>
                 </tr>
@@ -203,7 +215,7 @@ if (isset($_REQUEST["btn_addDish"])) {
         var errorElement = document.getElementById("tenmonError");
         if (tenMon.length == 0) {
             errorElement.textContent = "Tên món ăn không được để trống !";
-        }else {
+        } else {
             errorElement.textContent = "";
         }
     }
@@ -213,10 +225,9 @@ if (isset($_REQUEST["btn_addDish"])) {
         var errorElement = document.getElementById("priceError");
         if (gia.length == 0) {
             errorElement.textContent = "Giá món ăn không được để trống !";
-        }
-        else if (gia<1000) {
+        } else if (gia < 1000) {
             errorElement.textContent = "Giá tối thiểu từ 1000 trở lên!";
-        }else {
+        } else {
             errorElement.textContent = "";
         }
     }
@@ -227,11 +238,10 @@ if (isset($_REQUEST["btn_addDish"])) {
         var errorElement = document.getElementById("describeError");
         if (text.length == 0) {
             errorElement.textContent = "Vui lòng thêm mô tả cho món ăn !";
-        }else {
+        } else {
             errorElement.textContent = "";
         }
     }
-  
 </script>
 
 <?php
@@ -285,5 +295,3 @@ if (isset($_POST['btn_addDish'])) {
         }
     }
 }
-
-

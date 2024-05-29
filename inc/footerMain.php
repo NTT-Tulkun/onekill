@@ -52,7 +52,7 @@
           </li>
 
           <li>
-            <p class="footer-list-item">onekill@gamil.com</p>
+            <p class="footer-list-item">onekill@gmail.com</p>
           </li>
 
           <li>

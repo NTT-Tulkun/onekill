@@ -88,15 +88,7 @@ $order = $or->getOrderByidTaiKhoan($idTaiKhoan);
 
 
                             </div>
-                            <ul>
-                                <?php if (!empty($nl)) {
-                                    foreach ($nl as $item) { ?>
-                                        <li><b><?php echo $item['tenNguyenLieu'] ?>:</b> <span><?php echo $item['soLuong'] ?> (g)</span></li>
 
-                                <?php }
-                                } ?>
-
-                            </ul>
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -365,9 +357,9 @@ $order = $or->getOrderByidTaiKhoan($idTaiKhoan);
                                             <span class="date ml-1"><?php
                                                                     $ngay =  date(" H:i d/m/Y", strtotime($item['ngayDanhGia']));
                                                                     echo $ngay ?></span>
-
-                                            <a href="index.php?mod=Dish&act=DeletePhanHoi&idMonAn=<?php echo $_GET['idMonAn'] ?>&date=<?php echo  $_GET['date'] ?>&idPhanHoi=<?php echo $item['idPhanHoi'] ?>" style="position: absolute; right: 10px; color: red;"><i class="fa-solid fa-trash-can"></i></a>
-
+                                            <?php if ( $item['idTaiKhoan'] == $_SESSION['is_login']['idTaiKhoan']) { ?>
+                                                <a href="index.php?mod=Dish&act=DeletePhanHoi&idMonAn=<?php echo $_GET['idMonAn'] ?>&date=<?php echo  $_GET['date'] ?>&idPhanHoi=<?php echo $item['idPhanHoi'] ?>" style="position: absolute; right: 10px; color: red;"><i class="fa-solid fa-trash-can"></i></a>
+                                            <?php } ?>
                                         </div>
                                     </div>
 

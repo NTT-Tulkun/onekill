@@ -134,7 +134,7 @@ $p->DeleteDishCartOutDate($ngayHomNay);
                                                             <a style="border-radius:10px; background-color: #249BC8; padding: 5px 10px; color: #fff;" href="index.php?mod=Order&act=OrderDate&ngayLenMon=<?php echo $item['ngayLenMon'] ?>"><b>Đặt món</b></a>
 
 
-                                                            <a style="border-radius:10px; background-color: red;  padding: 5px 10px; color: #fff;" href="index.php?mod=cart&act=DeleteNgayLenMon&ngayLenMon=<?php echo $item['ngayLenMon'] ?>"><b>Hủy đơn</b></a>
+                                                            <a style="border-radius:10px; background-color: red;  padding: 5px 10px; color: #fff;" href="index.php?mod=cart&act=DeleteNgayLenMon&ngayLenMon=<?php echo $item['ngayLenMon'] ?>"><b>Hủy món</b></a>
                                                         </td>
                                                         <td colspan="2">
 

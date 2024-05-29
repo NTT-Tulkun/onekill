@@ -157,6 +157,8 @@ $order = $p->getSumOrderPayByidTaiKhoan($idTaiKhoan);
                             <input type="hidden" name="total" value="<?php if (isset($_GET['total'])) {
                                                                             echo $_GET['total'];
                                                                         } ?>">
+
+                            
                             <input class="btn btn-danger mt-3" type="submit" value="Thanh toán bằng MoMo" name="momo">
                         </form>
                         <form method="POST" target="_blank" enctype="application/x-www-form-urlencoded" action="index.php?mod=Order&act=XuLyThanhToanMomo_atm">

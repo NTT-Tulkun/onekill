@@ -64,6 +64,7 @@ $listNoPay = $p->SelectOrderNoPay();
                     $foundMatch = false;
 
                     if(!empty($list)){
+                      
                     foreach ($list as $order) {
                       if ($us['maNhanVien'] == $order['maNhanVien']) {
                         $foundMatch = true;
@@ -186,5 +187,4 @@ $listNoPay = $p->SelectOrderNoPay();
 </main>
 
 <?php
-echo "<pre>";
-print_r($list);
+
